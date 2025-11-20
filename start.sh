@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Iniciar PHP-FPM
-php-fpm &
+echo "➜ Arrancando PHP-FPM..."
+php-fpm --nodaemonize &
 
-# Iniciar Nginx en primer plano (requerido por Render)
+echo "➜ Arrancando Nginx..."
 nginx -g "daemon off;"
