@@ -27,23 +27,23 @@ services:
     networks:
       - laravel
 
-  postgres:
-    image: postgres:16
-    container_name: tablero_postgres
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: tablero_kanban
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    networks:
-      - laravel
+  # postgres:
+  #   image: postgres:16
+  #   container_name: tablero_postgres
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_DB: gestionTareas
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+  #   networks:
+  #     - laravel
 
 networks:
   laravel:
 
-volumes:
-  pgdata:
+# volumes:
+#   pgdata:
