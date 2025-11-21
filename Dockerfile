@@ -2,8 +2,8 @@ FROM php:8.2-fpm
 
 # Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
-    nginx git curl zip unzip libzip-dev libonig-dev libpng-dev libxml2-dev \
-    && docker-php-ext-install pdo pdo_mysql zip bcmath
+    nginx git curl zip unzip libzip-dev libonig-dev libpng-dev libxml2-dev libpq-dev \
+    && docker-php-ext-install pdo_pgsql pgsql zip bcmath
 
 # Instalar Composer
 COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer

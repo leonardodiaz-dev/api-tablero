@@ -7,12 +7,12 @@ services:
     working_dir: /var/www
     volumes:
       - ./:/var/www
-      - ./vendor:/var/www/vendor   # opcional: cache de vendor
+      - ./vendor:/var/www/vendor    # opcional: cache de vendor
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
     networks:
       - laravel
-    environment:
-      - APP_ENV=local
-      - APP_DEBUG=true
 
   nginx:
     image: nginx:alpine
@@ -27,18 +27,18 @@ services:
     networks:
       - laravel
 
-  mysql:
-    image: mysql:8
-    container_name: tablero_mysql
+  postgres:
+    image: postgres:16
+    container_name: tablero_postgres
+    restart: unless-stopped
     environment:
-      MYSQL_DATABASE: tablero_kanban
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: secret
+      POSTGRES_DB: tablero_kanban
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - dbdata:/var/lib/mysql
+      - pgdata:/var/lib/postgresql/data
     networks:
       - laravel
 
@@ -46,4 +46,4 @@ networks:
   laravel:
 
 volumes:
-  dbdata:
+  pgdata:
