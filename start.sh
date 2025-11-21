@@ -1,7 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+# Arrancar PHP-FPM
+php-fpm &
 
-echo "➜ Arrancando PHP-FPM..."
-php-fpm --nodaemonize &
-
-echo "➜ Arrancando Nginx..."
+# Arrancar Nginx en primer plano
 nginx -g "daemon off;"
