@@ -1,36 +1,20 @@
-# --- Imagen base PHP-FPM ---
-FROM php:8.2-fpm
+FROM richarvey/nginx-php-fpm:1.7.2
 
-# --- Instalar dependencias del sistema y extensiones PHP ---
-RUN apt-get update && apt-get install -y \
-    nginx git curl zip unzip libzip-dev libonig-dev libpng-dev libxml2-dev libpq-dev \
-    && docker-php-ext-install pdo_pgsql pgsql zip bcmath gd
-
-# --- Instalar Composer ---
-COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
-
-# --- Configurar directorio de trabajo ---
-WORKDIR /var/www/html
-
-# --- Copiar el código ---
 COPY . .
 
-# --- Instalar dependencias de PHP ---
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+# Image config
+ENV SKIP_COMPOSER 1
+ENV WEBROOT /var/www/html/public
+ENV PHP_ERRORS_STDERR 1
+ENV RUN_SCRIPTS 1
+ENV REAL_IP_HEADER 1
 
-# --- Permisos correctos para Laravel ---
-RUN chown -R www-data:www-data storage bootstrap/cache \
-    && chmod -R 775 storage bootstrap/cache
+# Laravel config
+ENV APP_ENV production
+ENV APP_DEBUG false
+ENV LOG_CHANNEL stderr
 
-# --- Configurar Nginx ---
-COPY default.conf /etc/nginx/conf.d/default.conf
+# Allow composer to run as root
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# --- Copiar start script ---
-COPY start.sh /usr/local/bin/start.sh
-RUN chmod +x /usr/local/bin/start.sh
-
-# --- Exponer puerto 80 ---
-EXPOSE 80
-
-# --- Comando principal ---
-CMD ["start.sh"]
+CMD ["/start.sh"]
