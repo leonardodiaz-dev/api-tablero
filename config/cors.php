@@ -6,7 +6,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [env('FRONTEND_URL')],
+    'allowed_origins' => ['https://gestion-tareas-kanban.netlify.app'],
 
     'allowed_origins_patterns' => [],
 
